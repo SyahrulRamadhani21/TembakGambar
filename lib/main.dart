@@ -28,7 +28,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  String currentVichacleName ='';
+  String currentVichacleName ='Veichle name';
 
 
   @override
@@ -43,11 +43,15 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Container(
-            height: 300,
-            color: Colors.blue,
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
+              child: Container(
+              height: 300,
+              color: Colors.blue,
+              ),
             ),
             OutlineButton(
+              padding: EdgeInsets.all(10.0),
               onPressed: () => {},
               child: Text(
                 'Show The Answer',
@@ -64,8 +68,15 @@ class _MyHomePageState extends State<MyHomePage> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.0),
               ),
+              highlightedBorderColor: Colors.black,
             ),
-            Text(currentVichacleName
+            Text(currentVichacleName,
+              style: TextStyle(
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
+                color: Colors.blue,
+                letterSpacing: 2,
+              ),
             ),
           ],
         ),
