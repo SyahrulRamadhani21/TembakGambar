@@ -28,6 +28,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  List<String> veichelnames =[
+    'elevate',
+    'excavator',
+    'helikopter',
+    'kapal',
+    'kereta',
+    'mobil',
+    'motor',
+    'pesawat',
+    'sepeda',
+    'truk',
+  ];
   String currentVichacleName ='Veichle name';
 
 
@@ -45,10 +57,11 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
-              child: Container(
-              height: 300,
-              color: Colors.blue,
-              ),
+              child: Image.asset(
+                'assets/images/${veichelnames[0]}.jpg',
+                height: 300,
+                fit: BoxFit.fitHeight,
+              )
             ),
             OutlineButton(
               padding: EdgeInsets.all(10.0),
