@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'image_card.dart';
 
 void main() => runApp(MyApp());
 
@@ -41,7 +42,27 @@ class _MyHomePageState extends State<MyHomePage> {
     'truk',
   ];
   String currentVichacleName ='Veichle name';
+  double scrollPercent = 0.0;
 
+  List<Widget> buildCards(){
+    List <Widget> cardsList=[];
+    for(int i=0; i < veichelnames.length; i++){
+      cardsList.add(buildCard(i,scrollPercent));
+    }
+    return cardsList;
+  }
+
+  Widget buildCard(int cardIndex, double scrollPercent ){
+    final cardScrollPercent= scrollPercent/(1/veichelnames.length);
+
+    return FractionalTranslation(
+      translation: Offset(cardIndex - cardScrollPercent, 0.0),
+      child: Padding(
+          padding: EdgeInsets.all(8.0),
+      child: ImageCard(imageName: veichelnames[cardIndex],),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,11 +78,9 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
-              child: Image.asset(
-                'assets/images/${veichelnames[0]}.jpg',
-                height: 300,
-                fit: BoxFit.fitHeight,
-              )
+              child: Stack(
+                children: buildCards(),
+              ),
             ),
             OutlineButton(
               padding: EdgeInsets.all(10.0),
