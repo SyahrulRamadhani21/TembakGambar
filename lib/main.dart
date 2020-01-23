@@ -33,16 +33,19 @@ class _MyHomePageState extends State<MyHomePage> {
     'elevate',
     'excavator',
     'helikopter',
-    'kapal',
+    'Kapal',
     'kereta',
     'mobil',
     'motor',
     'pesawat',
     'sepeda',
-    'truk',
   ];
   String currentVichacleName ='Veichle name';
   double scrollPercent = 0.0;
+  Offset startDrag;
+  double startDracgPercentScroll;
+  double finishScrollStart;
+  double finishScrollEnd;
 
   List<Widget> buildCards(){
     List <Widget> cardsList=[];
@@ -64,6 +67,30 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void onHprizontalDragStart(DragStartDetails details){
+    startDrag = details.globalPosition;
+    startDracgPercentScroll = scrollPercent;
+  }
+  void onHprizontalDragUpdate(DragUpdateDetails details){
+    final currentDrag = details.globalPosition;
+    final dragDistance=currentDrag.dx-startDrag.dx;
+    final singleCardDragPercent=dragDistance/context.size.width;
+
+    setState(() {
+      scrollPercent=(startDracgPercentScroll+(-singleCardDragPercent
+          /veichelnames.length)).clamp(0.0, 1.0-(1/veichelnames.length));
+    });
+  }
+  void onHprizontalDragEnd(DragEndDetails details){
+    finishScrollStart = scrollPercent;
+    finishScrollEnd = (scrollPercent* veichelnames.length ).round()/ veichelnames.length;
+    setState(() {
+      startDrag=null;
+      startDracgPercentScroll=null;
+      currentVichacleName='';
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -78,8 +105,15 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
-              child: Stack(
-                children: buildCards(),
+              child: GestureDetector(
+                onHorizontalDragStart: onHprizontalDragStart ,
+                onHorizontalDragUpdate: onHprizontalDragUpdate,
+                onHorizontalDragEnd: onHprizontalDragEnd,
+                behavior: HitTestBehavior.translucent,
+                child: Stack(
+                  children: buildCards(),
+
+                ),
               ),
             ),
             OutlineButton(
